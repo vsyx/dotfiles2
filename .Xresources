@@ -1,0 +1,45 @@
+!! Colorscheme
+
+! black
+*.color0: #263640
+*.color8: #4a697d
+
+! red
+*.color1: #d12f2c
+*.color9: #fa3935
+
+! green
+*.color2: #819400
+*.color10: #a4bd00
+
+! yellow
+*.color3: #b08500
+*.color11: #d9a400
+
+! blue
+*.color4: #2587cc
+*.color12: #2ca2f5
+
+! magenta
+*.color5: #d7009f
+*.color13: #d7005f
+
+! cyan
+*.color6: #289c93
+*.color14: #33c5ba
+
+! white
+*.color7: #a0a0a0
+*.color15: #ffffff
+!*.background: #000000
+
+!background
+*.color256: #000000
+!foreground
+*.color257: #93a1a1
+!cursor
+*.color258: #d3d3d3
+
+Xcursor.size: 16
+!*.font: monospace:pixelsize=14:antialias=true:autohint=true;
+!*.alpha: 0.9

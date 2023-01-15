@@ -1,0 +1,20 @@
+XF86MonBrightnessUp
+	brightnessctl set +5%
+
+XF86MonBrightnessDown
+	brightnessctl set 5%-
+
+XF86Audio{Raise,Lower}Volume
+	pamixer -{i,d} 5
+
+XF86AudioMute
+	pamixer -t
+
+XF86AudioMicMute
+	pamixer --default-source -t
+
+super + shift + s
+	flameshot gui
+
+super + {_, shift +} v
+	copyq {menu, toggle}

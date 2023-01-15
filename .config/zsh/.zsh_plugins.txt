@@ -1,0 +1,15 @@
+jeffreytse/zsh-vi-mode
+belak/zsh-utils 				path:editor
+belak/zsh-utils 				path:history
+belak/zsh-utils 				path:utility
+belak/zsh-utils 				path:completion
+
+trapd00r/LS_COLORS
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+olets/zsh-abbr  				kind:defer
+zdharma-continuum/fast-syntax-highlighting 	kind:defer
+ohmyzsh/ohmyzsh 				path:plugins/colored-man-pages
+unixorn/fzf-zsh-plugin
+romkatv/powerlevel10k
