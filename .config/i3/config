@@ -185,6 +185,8 @@ client.background       #FFFFFF
 
 # Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+# Notification manager
+exec_always --no-startup-id dunst
 
 #bar {
 #    status_command i3status
