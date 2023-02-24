@@ -7,7 +7,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.config/nvm"
 
 typeset -U path
-path=(/home/vnsmits/.local/bin:$PATH
+path=(/home/$USER/.local/bin:$PATH
       $PYENV_ROOT/bin
       $path)
 export PATH
