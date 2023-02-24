@@ -18,7 +18,6 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
 
 # Misc
-export GTK_THEME=Adwaita:dark
 export EDITOR=$(command -v nvim > /dev/null && echo nvim || echo vim)
 
 typeset -U path
