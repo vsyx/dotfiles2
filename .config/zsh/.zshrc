@@ -1,4 +1,4 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh//.zshrc.
+# Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -14,8 +14,8 @@ ZVM_INIT_MODE=sourcing
 ZVM_CURSOR_STYLE_ENABLED=false
 
 # Fzf 
-export FZF_PATH="$XDG_CONFIG_HOME/fzf"
 export FZF_PREVIEW_WINDOW='right:65%:nohidden'
+export FZF_PATH="$XDG_DATA_HOME/fzf"
 
 # Plugin manager
 zstyle ':antidote:bundle' use-friendly-names 'yes'
@@ -34,44 +34,85 @@ zvm_vi_yank () {
 }
 
 # Fzf 
-export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!vendor/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --no-require-git --no-messages --glob "!.git/*" --glob "!node_modules/*"'
+export FZF_DEFAULT_DIR_COMMAND='fd --type directory --follow --hidden --no-require-git --exclude ".git" --exclude "node_modules"'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+
+if command -v lesspipe.sh > /dev/null; then
+	export LESSOPEN="|lesspipe.sh %s"
+	export LESSCOLORIZER=bat
+fi
+
+fzf_open_in_editor() {
+	local files=$(eval ${FZF_DEFAULT_COMMAND} | fzf -m)
+	if [ ! -z "$files" ]; then
+		$EDITOR $files
+	fi
+	zle reset-prompt
+}
+zle -N fzf_open_in_editor
+bindkey '^S' fzf_open_in_editor
+
+fzf_cdf() {
+	#local dir=$(eval ${FZF_DEFAULT_COMMAND} --null 2> /dev/null $HOME | xargs -0 dirname | sort --unique | fzf)
+	local dir=$(eval ${FZF_DEFAULT_DIR_COMMAND} . $HOME | fzf --delimiter / --with-nth 4..)
+	if [ ! -z "$dir" ]; then
+		cd $dir
+		zle accept-line
+	fi
+	zle reset-prompt
+}
+zle -N fzf_cdf
+bindkey '^Q' fzf_cdf
 
 # Aliases
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias dotconfig='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
 # tmux lsd bat dust duf gping tuptime hyperfine procs ripgrep tldr viddy ugrep up hexyl mtr gdu doggo-bin advcpmv fcp qrcp bsdmainutils
 function _alias() { command -v "$1" > /dev/null && alias "$2"="${3-$1}" }
+# Basic
+_alias ls	ls		'ls --color=auto'
+_alias grep	grep		'grep --color=auto'
+_alias git	dotconfig 	'git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# Custom
 _alias duf	df
 _alias gping	ping
-_alias mtr	traceroute 	
+_alias mtr	traceroute 	 
 _alias tuptime	uptime
 _alias ugrep 	grep
 _alias nvim	vim
 _alias gdu	ncdu
 _alias doggo	dig
 _alias nvim	vim
-_alias grace	strace
 _alias mvg	mv		'mvg -g'
 _alias cpg	cp		'cpg -g'
-_alias tmux 	tmux 		'tmux -f $XDG_CONFIG_HOME/.tmux.conf'
 _alias lsd 	ls		'lsd --icon never'
-_alias bat	cat		'bat --plain --theme base16'
+_alias bat	cat		'bat --plain'
+_alias bat	lessh		'bat --plain --paging=always --language=help'
 _alias viddy	watch		'viddy --differences'
 _alias dust	du		'dust -r'
 _alias hexyl	xxd		'hexyl --border=none'
 _alias ncal	cal		'ncal -bM'
-_alias fd	fd		'fd -H'
+_alias fd	fd		'fd --hidden'
+_alias rg	rg		'rg --hidden --no-messages'
+_alias bat	strace		"strace -o '| bat --plain --paging=never --language=strace'"
 _alias procs	procsm		'procs --sortd MEM'	
 _alias procs	procsc		'procs --sortd CPU'	
-unset -f _alias
+# History
+_alias wget	wget		'wget --hsts-file=$XDG_CACHE_HOME/wget-hsts'
+# Config
+_alias tmux 	tmux 		'tmux -f $XDG_CONFIG_HOME/.tmux.conf'
+unset -f _alias 
 
-# Misc options
+# Zsh options
 HISTSIZE=1000000
 SAVEHIST=1000000
+
 setopt globdots # match hidden files without specifying dots
 set -o ignoreeof # Disable CTRL-D
+if [[ -t 0 && $- = *i* ]]; then
+	stty -ixon # unbind C-S
+	stty -ixoff # unbind C-Q
+fi 
+
 unsetopt BEEP
 
 # Open editor via CTRL-E
