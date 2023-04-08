@@ -22,6 +22,7 @@ export EDITOR=$(command -v nvim > /dev/null && echo nvim || echo vim)
 
 typeset -U path
 path=(/home/$USER/.local/bin:$PATH
+      /home/$USER/.local/share/python/bin
       $PYENV_ROOT/bin
       $path)
 export PATH

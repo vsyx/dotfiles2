@@ -1,5 +1,5 @@
-jeffreytse/zsh-vi-mode
-belak/zsh-utils 				path:editor
+jeffreytse/zsh-vi-mode                          kind:fpath
+#belak/zsh-utils 				path:editor
 belak/zsh-utils 				path:history
 belak/zsh-utils 				path:utility
 belak/zsh-utils 				path:completion
@@ -11,5 +11,6 @@ zsh-users/zsh-history-substring-search
 olets/zsh-abbr  				kind:defer
 zdharma-continuum/fast-syntax-highlighting 	kind:defer
 ohmyzsh/ohmyzsh 				path:plugins/colored-man-pages
-unixorn/fzf-zsh-plugin
+unixorn/fzf-zsh-plugin                          kind:fpath
 romkatv/powerlevel10k
+

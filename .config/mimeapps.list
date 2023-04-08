@@ -7,7 +7,11 @@ x-scheme-handler/https=firefox.desktop
 x-scheme-handler/about=firefox.desktop
 x-scheme-handler/unknown=firefox.desktop
 application/json=firefox.desktop
+text/x-log=nvim.desktop
 
 [Added Associations]
-text/plain=org.gnome.gedit.desktop;
 application/vnd.oasis.opendocument.text=openoffice4-writer.desktop;
+text/plain=org.gnome.gedit.desktop;nvim.desktop;
+text/x-log=nvim.desktop;
+application/json=nvim.desktop;
+application/vnd.adobe.flash.movie=nvim.desktop;

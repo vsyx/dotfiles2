@@ -31,8 +31,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 setxkbmap lv -option caps:escape -option terminate:ctrl_alt_bksp
-xsettingsd &
 sxhkd &
 picom &
 copyq &
-exec i3
+#xsettingsd & 
+#exec i3
+exec startxfce4

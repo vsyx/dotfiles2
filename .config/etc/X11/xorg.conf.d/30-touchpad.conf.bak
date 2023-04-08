@@ -1,8 +1,0 @@
-Section "InputClass"
-    Identifier "SynPS/2 Synaptics TouchPad"
-    Driver "libinput"
-    MatchIsTouchpad "on"
-    Option "Tapping" "on"
-    Option "ClickMethod" "clickfinger"
-    Option "NaturalScrolling" "true"
-EndSection
