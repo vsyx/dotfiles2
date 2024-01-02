@@ -16,7 +16,7 @@
         <property name="Y" type="double" value="1"/>
       </property>
       <property name="Position" type="empty">
-        <property name="X" type="int" value="973"/>
+        <property name="X" type="int" value="975"/>
         <property name="Y" type="int" value="2160"/>
       </property>
     </property>
@@ -52,7 +52,7 @@
         <property name="Y" type="double" value="1"/>
       </property>
       <property name="Position" type="empty">
-        <property name="X" type="int" value="973"/>
+        <property name="X" type="int" value="975"/>
         <property name="Y" type="int" value="2160"/>
       </property>
     </property>

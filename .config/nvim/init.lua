@@ -182,7 +182,8 @@ require('lazy').setup({
   },
   {
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
+    --event = 'VeryLazy',
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/nvim-cmp', 'folke/neodev.nvim' },
     config = function()
       local opts = { noremap=true, silent=true }
@@ -224,6 +225,10 @@ require('lazy').setup({
         on_attach = on_attach,
         capabilities = capabilities,
       })
+      require('lspconfig').tsserver.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
     end
   },
   {
@@ -234,6 +239,7 @@ require('lazy').setup({
         'lua_ls',
         'pyright',
         'jdtls',
+        'tsserver',
       }
     }
   },
@@ -376,18 +382,29 @@ require('lazy').setup({
     config = function()
       require("nvim-tree").setup({
         hijack_netrw = true,
+        actions = {
+          open_file = {
+            quit_on_open = true,
+          },
+        },
       })
       local function open_nvim_tree(data)
         -- buffer is a directory
         --
         if vim.fn.isdirectory(data.file) == 1 then
           vim.cmd.cd(data.file)
-        elseif data.file == "" and vim.bo[data.buf].buftype == "" then
+        --elseif data.file == "" and vim.bo[data.buf].buftype == "" then
         else
           return
         end
         require("nvim-tree.api").tree.open()
       end
+
+      vim.keymap.set("n", "<C-q>", function()
+        require("nvim-tree.api").tree.toggle()
+        local keys = vim.api.nvim_replace_termcodes('<C-W><C-O>', true, false, true)
+        vim.api.nvim_feedkeys(keys, 'n', false)
+      end)
 
       vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
     end
@@ -398,7 +415,11 @@ require('lazy').setup({
     opts = {
       prompt_end = '~ ❯ '
     }
-  }
+  },
+  {
+    'tpope/vim-dadbod',
+    event = 'VeryLazy',
+  },
 },
 {
   defaults = { lazy = true },

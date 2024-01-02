@@ -12,5 +12,6 @@ olets/zsh-abbr  				kind:defer
 zdharma-continuum/fast-syntax-highlighting 	kind:defer
 ohmyzsh/ohmyzsh 				path:plugins/colored-man-pages
 unixorn/fzf-zsh-plugin                          kind:fpath
+Tarrasch/zsh-bd                                 kind:defer
 romkatv/powerlevel10k
-
+gokcehan/lf                                     path:etc/lfcd.sh

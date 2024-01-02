@@ -134,7 +134,7 @@ fi
 # Aliases
 # tmux lsd bat dust duf gping tuptime hyperfine procs ripgrep tldr viddy ugrep up hexyl mtr gdu doggo-bin advcpmv fcp qrcp bsdmainutils
 function _alias() { command -v "$1" > /dev/null && alias "$2"="${3-$1}" }
-# Basic
+# Basic / builtin
 _alias ls	ls		'ls --color=auto'
 _alias grep	grep		'grep --color=auto'
 _alias git	dotconfig 	'git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -151,22 +151,58 @@ _alias nvim	vim
 _alias mvg	mv		'mvg -g'
 _alias cpg	cp		'cpg -g'
 _alias lsd 	ls		'lsd --icon never'
+_alias lsd 	ll		'lsd --icon never -l --date=relative --timesort'
+_alias lsd 	lls		'lsd --icon never -l --date=relative --sizesort --total-size'
+_alias lsd      tree            'lsd --icon never --tree'
 _alias bat	cat		'bat --plain'
-_alias bat	lessh		'bat --plain --paging=always --language=help'
+_alias bat	lessh		'bat --style=plain --paging=always --language=help'
 _alias viddy	watch		'viddy --differences'
 _alias dust	du		'dust -r'
 _alias hexyl	xxd		'hexyl --border=none'
 _alias ncal	cal		'ncal -bM'
 _alias fd	fd		'fd --hidden'
 _alias rg	rg		'rg --hidden --no-messages'
-_alias bat	strace		"strace -o '| bat --plain --paging=never --language=strace'"
+_alias bat	strace		"strace -o '| bat --style=plain --paging=never --language=strace'"
 _alias procs	procsm		'procs --sortd MEM'
 _alias procs	procsc		'procs --sortd CPU'
+_alias xclip    pbpastepng      'xclip -selection clipboard -o -t image/png'
+_alias xclip    pbpastejpeg     'xclip -selection clipboard -o -t image/jpeg'
+_alias curl     curlo           'curl -LO'
+_alias curl     curlop          'curl -LO $(pbpaste)'
+_alias lfcd     lf              'lfcd'
 # History
 _alias wget	wget		'wget --hsts-file=$XDG_CACHE_HOME/wget-hsts'
 # Config
 _alias tmux 	tmux 		'tmux -f $XDG_CONFIG_HOME/.tmux.conf'
 unset -f _alias
+
+# Utility functions
+
+function pc() {
+  args="$@"
+  python -c "from math import *; print($args)"
+}
+zle -N pc
+
+function mkdircd() {
+  mkdir -p -- "$1" && cd -P -- "$1"
+}
+zle -N mkdircd
+
+function pbpasteimg() {
+  if [[ "$#" -ne 1 ]]; then
+    echo "Illegal number of parameters - filename must be supplied" >&2
+    return 2
+  fi
+  mimetype=$(xclip -selection clipboard -t TARGETS -o | grep -E '^image\/.*' | head -n 1)
+  if [[ -z "$mimetype" ]]; then
+    echo "No image mimetype found in clipboard" >&2
+    return 2
+  else
+    filetype=$(cut -d '/' -f2 <<< "$mimetype")
+    xclip -selection clipboard -t "$mimetype" -o > "$1.$filetype"
+  fi
+}
 
 # Zsh options
 HISTSIZE=1000000

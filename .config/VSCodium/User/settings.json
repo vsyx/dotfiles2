@@ -1,0 +1,7 @@
+{
+    "workbench.colorTheme": "Default Dark+ Experimental",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "keyboard.dispatch": "keyCode",
+}
