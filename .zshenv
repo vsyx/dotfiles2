@@ -24,6 +24,7 @@ typeset -U path
 path=(/home/$USER/.local/bin:$PATH
       /home/$USER/.local/share/python/bin
       $PYENV_ROOT/bin
+      $PYENV_ROOT/shims
       $path)
 export PATH
 

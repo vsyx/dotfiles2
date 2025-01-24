@@ -1,17 +1,41 @@
-jeffreytse/zsh-vi-mode                          kind:fpath
 #belak/zsh-utils 				path:editor
+
+jeffreytse/zsh-vi-mode                          kind:fpath
 belak/zsh-utils 				path:history
 belak/zsh-utils 				path:utility
 belak/zsh-utils 				path:completion
 
-trapd00r/LS_COLORS
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
+trapd00r/LS_COLORS                              kind:defer
+zsh-users/zsh-completions                       kind:defer
+zsh-users/zsh-autosuggestions                   kind:defer
+zsh-users/zsh-history-substring-search          kind:defer
 olets/zsh-abbr  				kind:defer
 zdharma-continuum/fast-syntax-highlighting 	kind:defer
-ohmyzsh/ohmyzsh 				path:plugins/colored-man-pages
-unixorn/fzf-zsh-plugin                          kind:fpath
+ohmyzsh/ohmyzsh 				kind:defer path:plugins/colored-man-pages
+unixorn/fzf-zsh-plugin                          kind:clone
+junegunn/fzf                                    kind:clone
 Tarrasch/zsh-bd                                 kind:defer
 romkatv/powerlevel10k
 gokcehan/lf                                     path:etc/lfcd.sh
+mdumitru/fancy-ctrl-z                           kind:defer
+unixorn/prettyping                              kind:defer
+mattmc3/zman                                    kind:defer
+zpm-zsh/tmux
+romkatv/zsh-defer                               kind:zsh
+tmux-plugins/tpm                                kind:clone
+
+lukechilds/zsh-nvm                              kind:defer
+davidparsson/zsh-pyenv-lazy                     kind:defer
+ohmyzsh/ohmyzsh 				kind:defer path:plugins/thefuck
+
+akash329d/zsh-alias-finder                      
+mdumitru/git-aliases                            
+Junker/zsh-archlinux                            
+webyneter/docker-aliases                        
+le0me55i/zsh-systemd                            
+
+# GIT interactive 
+# - https://github.com/wfxr/forgit
+# - https://github.com/bigH/git-fuzzy
+# -https://github.com/ytakahashi/igit
+

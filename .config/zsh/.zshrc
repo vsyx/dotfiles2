@@ -1,7 +1,13 @@
+#zmodload zsh/zprof
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+export TMUX_AUTOSTART=${TMUX_AUTOSTART:-false}
+NVM_LAZY_LOAD=true
+ZSH_PYENV_LAZY_VIRTUALEN=true
+ZSH_VI_MODE_ENABLED=0
 
 # Plugin manager
 zstyle ':antidote:bundle' use-friendly-names 'yes'
@@ -9,7 +15,8 @@ source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load
 
 function load_manual_plugins() {
-  source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+  zsh-defer source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+  #source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 }
 
 function set_keybindings() {
@@ -33,31 +40,13 @@ function set_keybindings() {
   bindkey -M vicmd '^k' up-history
 
   function fzf_open_in_editor() {
-    local files=$(eval ${FZF_DEFAULT_COMMAND} | fzf -m)
-    if [ ! -z "$files" ]; then
-      $EDITOR $files
-    fi
-    zle reset-prompt
-  }
-  zle -N fzf_open_in_editor
-  bindkey '^S' fzf_open_in_editor
-
-  function fzf_cdf() {
-    #local dir=$(eval ${FZF_DEFAULT_COMMAND} --null 2> /dev/null $HOME | xargs -0 dirname | sort --unique | fzf)
-    local dir=$(eval ${FZF_DEFAULT_DIR_COMMAND} . $HOME | fzf --delimiter / --with-nth 4..)
-    if [ ! -z "$dir" ]; then
-      cd $dir
-      zle accept-line
-    fi
-    zle reset-prompt
-  }
-  zle -N fzf_cdf
-  bindkey '^Q' fzf_cdf
-
-  function fzf_open_in_editor() {
-          local files=$(eval ${FZF_DEFAULT_COMMAND} | fzf -m)
+          local files=$(fzf -m < <(eval ${FZF_DEFAULT_COMMAND}))
           if [ ! -z "$files" ]; then
-                  $EDITOR $files
+            if [ -z "${LBUFFER%% }" ]; then
+              $EDITOR $files
+            else
+              LBUFFER="${LBUFFER}$files"
+            fi
           fi
           zle reset-prompt
   }
@@ -66,7 +55,7 @@ function set_keybindings() {
 
   function fzf_cdf() {
           #local dir=$(eval ${FZF_DEFAULT_COMMAND} --null 2> /dev/null $HOME | xargs -0 dirname | sort --unique | fzf)
-          local dir=$(eval ${FZF_DEFAULT_DIR_COMMAND} . $HOME | fzf --delimiter / --with-nth 4..)
+          local dir=$(fzf --delimiter / --with-nth 4.. < <(eval ${FZF_DEFAULT_DIR_COMMAND} . $HOME))
           if [ ! -z "$dir" ]; then
                   cd $dir
                   zle accept-line
@@ -138,14 +127,17 @@ function _alias() { command -v "$1" > /dev/null && alias "$2"="${3-$1}" }
 _alias ls	ls		'ls --color=auto'
 _alias grep	grep		'grep --color=auto'
 _alias git	dotconfig 	'git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+_alias git	envfiles        'git --git-dir=$HOME/.envfiles/ --work-tree=$HOME'
+_alias sudo     sudo            'sudo '
+_alias doas     doas            'doas '
 # Custom
 _alias duf	df
 _alias gping	ping
-_alias mtr	traceroute
+_alias trip     traceroute
 _alias tuptime	uptime
 _alias ugrep 	grep
 _alias nvim	vim
-_alias gdu	ncdu
+_alias gdu	ncdu            'gdu -x'
 _alias doggo	dig
 _alias nvim	vim
 _alias mvg	mv		'mvg -g'
@@ -172,8 +164,6 @@ _alias curl     curlop          'curl -LO $(pbpaste)'
 _alias lfcd     lf              'lfcd'
 # History
 _alias wget	wget		'wget --hsts-file=$XDG_CACHE_HOME/wget-hsts'
-# Config
-_alias tmux 	tmux 		'tmux -f $XDG_CONFIG_HOME/.tmux.conf'
 unset -f _alias
 
 # Utility functions
@@ -217,9 +207,9 @@ fi
 
 unsetopt BEEP
 
-command -v thefuck > /dev/null && eval $(thefuck --alias)
-command -v pyenv > /dev/null && eval "$(pyenv init -)"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#command -v thefuck > /dev/null && eval $(thefuck --alias)
+#command -v pyenv > /dev/null && eval "$(pyenv init -)"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+#zprof

@@ -89,7 +89,7 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
 
   # Grey Python Virtual Environment.
-  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$magenta
   # Don't show Python version.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=

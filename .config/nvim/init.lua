@@ -175,10 +175,8 @@ require('lazy').setup({
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    event = 'BufReadPre',
-    build = function()
-      require("nvim-treesitter.install").update({ with_sync = true })
-    end,
+    event = "BufReadPre",
+    build = ":TSUpdate",
   },
   {
     'neovim/nvim-lspconfig',
@@ -221,10 +219,10 @@ require('lazy').setup({
         on_attach = on_attach,
         capabilities = capabilities,
       })
-      require('lspconfig').jdtls.setup({
+      --[[require('lspconfig').jdtls.setup({
         on_attach = on_attach,
         capabilities = capabilities,
-      })
+      })--]]
       require('lspconfig').tsserver.setup({
         on_attach = on_attach,
         capabilities = capabilities,
@@ -242,6 +240,24 @@ require('lazy').setup({
         'tsserver',
       }
     }
+  },
+  {
+    'fei6409/log-highlight.nvim',
+     config = true,
+     lazy = false,
+  },
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = 'java',
+    dependencies = { 'williamboman/mason-lspconfig.nvim' },
+    config = function()
+      local mason = require 'mason-registry'
+      local jdtls_path = mason.get_package('jdtls'):get_install_path()
+      require 'jdtls'.start_or_attach({
+        cmd = { jdtls_path .. '/jdtls' },
+        root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+      })
+    end
   },
   {
     'williamboman/mason.nvim',

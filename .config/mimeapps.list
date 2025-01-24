@@ -15,3 +15,5 @@ text/plain=org.gnome.gedit.desktop;nvim.desktop;
 text/x-log=nvim.desktop;
 application/json=nvim.desktop;
 application/vnd.adobe.flash.movie=nvim.desktop;
+application/pdf=firefox.desktop;
+image/jxl=gimp.desktop;org.gnome.gThumb.desktop;
