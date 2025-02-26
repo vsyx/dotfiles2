@@ -10,13 +10,21 @@ ZSH_PYENV_LAZY_VIRTUALEN=true
 ZSH_VI_MODE_ENABLED=0
 
 # Plugin manager
-zstyle ':antidote:bundle' use-friendly-names 'yes'
-source '/usr/share/zsh-antidote/antidote.zsh'
-antidote load
+antidote_path=${ZDOTDIR:-~/.config/zsh}/.antidote/antidote.zsh
+antidote_loaded=false
+
+if [ -f $antidote_path ]; then
+  zstyle ':antidote:bundle' use-friendly-names 'yes'
+  source "$antidote_path"
+  antidote load
+  antidote_loaded=true
+fi
 
 function load_manual_plugins() {
-  zsh-defer source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
-  #source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+  if $antidote_loaded; then
+    zsh-defer source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+    #source ${XDG_CACHE_HOME:-$HOME/.cache}/antidote/unixorn/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+  fi
 }
 
 function set_keybindings() {

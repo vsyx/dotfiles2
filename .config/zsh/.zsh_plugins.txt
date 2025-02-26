@@ -25,7 +25,7 @@ romkatv/zsh-defer                               kind:zsh
 tmux-plugins/tpm                                kind:clone
 
 lukechilds/zsh-nvm                              kind:defer
-davidparsson/zsh-pyenv-lazy                     kind:defer
+#davidparsson/zsh-pyenv-lazy                     kind:defer
 ohmyzsh/ohmyzsh 				kind:defer path:plugins/thefuck
 
 akash329d/zsh-alias-finder                      

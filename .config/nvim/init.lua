@@ -154,15 +154,6 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'nvim/oxocarbon.nvim',
-    dev = true,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme('oxocarbon')
-    end,
-  },
   'ellisonleao/gruvbox.nvim',
   -- Colorschemes end
   {
@@ -223,7 +214,7 @@ require('lazy').setup({
         on_attach = on_attach,
         capabilities = capabilities,
       })--]]
-      require('lspconfig').tsserver.setup({
+      require('lspconfig').ts_ls.setup({
         on_attach = on_attach,
         capabilities = capabilities,
       })
